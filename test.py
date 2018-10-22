@@ -2,6 +2,11 @@ import socket # for socket
 import binascii
 import sys  
 from time import sleep
+import random
+import multiprocessing as mp
+import random
+import string
+
 
 # a function I found that reverses bits
 def reverse_bits( x ):
@@ -16,11 +21,11 @@ def reverse_bits( x ):
   return y
 
 # this keeps the reversals in the right range for reversing
-for i in range(125):
+def send_strings( i ):
 	# a small test array
 	my_bytes = bytearray()
 	for j in range(125):
-		my_bytes.append(j+1)
+		my_bytes.append(random.randint(0,127))
 	try: 
 	    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 	except socket.error as err: 
@@ -41,10 +46,13 @@ for i in range(125):
 	# collect the data
 	data = s.recv(2048)
 	# put into a byte array for comparasion
-        ret_bytes = bytearray(data)
+	ret_bytes = bytearray(data)
 	# check to see if the first element is the reverse of the last element
 	if (hex(ret_bytes[0]) == hex(reverse_bits(my_bytes[len(my_bytes)-1]))):
 		print "Test " + str(i) + " Passed"
 	else:
 		print "Test " + str(i) + " Failed"
 	s.close()
+
+pool = mp.Pool(processes=10)
+[pool.apply(send_strings, args=(x,)) for x in range(1,10000)]
