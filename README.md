@@ -1,4 +1,4 @@
-This directory contains a small project done for Verizon.
+This directory contains a small project done to experiment with epoll functionality.
 
 There are the following files in the directory:
 
