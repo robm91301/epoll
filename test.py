@@ -24,7 +24,7 @@ def reverse_bits( x ):
 def send_strings( i ):
 	# a small test array
 	my_bytes = bytearray()
-	for j in range(125):
+	for j in range(127):
 		my_bytes.append(random.randint(0,127))
 	try: 
 	    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
@@ -54,5 +54,5 @@ def send_strings( i ):
 		print "Test " + str(i) + " Failed"
 	s.close()
 
-pool = mp.Pool(processes=10)
-[pool.apply(send_strings, args=(x,)) for x in range(1,10000)]
+pool = mp.Pool(processes=3)
+[pool.apply(send_strings, args=(x,)) for x in range(1,15000)]

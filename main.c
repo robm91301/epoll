@@ -82,6 +82,8 @@ void *thread_func(void *p)
 	r = epoll_pwait(efd, &e, 1, -1, 0);
 	if (r == -1) {
 	    // bail on all errors except EINTR
+	    // cause EINTR is just that the call 
+	    // was interrupted
 	    if (EINTR == errno) {
 		continue;
 	    } else {
